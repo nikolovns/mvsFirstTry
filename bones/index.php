@@ -25,10 +25,13 @@ $uri = trim($uri, '/');
 $requestUri = explode('/', $uri);
 
 $controller = array_shift($requestUri);
-
+$admin = false;
 if($controller == 'admin') {
     $controller = array_shift($requestUri);
+    $admin = true;
 }
+
+
 $controller = ucfirst(strtolower($controller));
 
 $action = array_shift($requestUri);
@@ -36,7 +39,7 @@ $action = array_shift($requestUri);
 $params = $requestUri;
 define('BASE_URL', $controller . DIRECTORY_SEPARATOR . $action . DIRECTORY_SEPARATOR);
 
-$app = new \App($controller, $action, $params);
+$app = new \App($controller, $action, $params, $admin);
 $app->run();
 
 
