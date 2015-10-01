@@ -19,7 +19,41 @@ class View {
     }
 
     public function part($name) {
-        include 'Views/Master/' . $name . '.php';
+        include 'Views/Default/templateHTML/' . $name . '.php';
     }
-
+    
+    public function url(
+            $controller = null,
+            $action = null,
+            $params = []
+            ){
+        $requstURI = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+        $root = array_shift($requstURI);
+        $uri = '//' . $_SERVER['HTTP_HOST'] . '/' . $root;
+        $uri = "$uri";
+        //var_dump($uri); exit;
+        if($controller) {
+            $uri .= '/' .$controller;
+        }
+        if($action) {
+            $uri .= '/' . $action;
+        }
+        if($params) {
+            foreach ($params as $key => $value) {
+                $uri .= "/$value";
+            }
+        }
+        
+        return $uri;
+        
+    }
+    /**
+     * 
+     * @param type $text
+     * @return string
+     */
+    public function escape($text) {
+        return htmlspecialchars($text, ENT_QUOTES, 'utf-8');
+    }
+    
 }

@@ -16,9 +16,7 @@ class App {
         if(empty($this->controller)){
             $this->controller = 'home';
         }
-        if ($this->controller == 'Page') {
-            $this->admin = true;
-        }
+        
         
         $this->action = $action;
         if($action == null) {
@@ -28,13 +26,16 @@ class App {
     }
      
     private function setController(){
+        
+        $view = new View($this->controller, $this->action);
         $area = '';
-        //$view = new View($this->controller, $this->action);
         if ($this->admin) {
             $area = 'Admin\\';
         }
+        
         $controller = '\Controllers\\' . $area . ucfirst(strtolower($this->controller)) . 'Controller';
-        $this->classController = new $controller($this);
+        
+        $this->classController = new $controller($view, $controller);
     }
     
     public function run(){

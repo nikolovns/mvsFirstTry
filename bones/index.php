@@ -1,6 +1,10 @@
 <?php
 
-use \Models;
+define( 'DX_ROOT_DIR', dirname(__FILE__) . '/' );
+//get root name
+define( 'DX_ROOT_PATH', basename(dirname(__FILE__)) . '/' );
+
+
 
 require_once 'AutoLoad.php';
 new AutoLoad();
@@ -28,16 +32,11 @@ if($controller == 'admin') {
 $controller = ucfirst(strtolower($controller));
 
 $action = array_shift($requestUri);
-$params = $requestUri;
 
+$params = $requestUri;
+define('BASE_URL', $controller . DIRECTORY_SEPARATOR . $action . DIRECTORY_SEPARATOR);
 
 $app = new \App($controller, $action, $params);
 $app->run();
 
-//\Database\Db::getInstance()
-//        ->query('INSERT INTO users(username, pasword, email) VALUES(?, ?, ?)', ['admin4', 333, 'mail']);
-
-//$user = new Models\UserModels('kiki', 123, 'kikimail');
-//$user->save();
-//var_dump($user->getEmail());
 

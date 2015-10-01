@@ -8,7 +8,5 @@ class AutoLoad {
             $path = implode(DIRECTORY_SEPARATOR, $pathParam);
             require_once $path . '.php';
         });
-        
-        
     }
 }
