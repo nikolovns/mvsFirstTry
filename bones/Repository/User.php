@@ -44,7 +44,7 @@ class User {
     }
 
     public function getOneByDetails($username, $password) {
-        $query = "SELECT username, password, id FROM users WHERE username = ? AND password = ?";
+        $query = "SELECT username, password, admin, id FROM users WHERE username = ? AND password = ?";
         $this->db->query($query, [$username, $password]);
         $result = $this->db->row();
         return $this->getOneById($result['id']);

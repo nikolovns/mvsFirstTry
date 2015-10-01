@@ -66,12 +66,23 @@ class MasterController {
 //    }
 
     public function redirectControllers($controller, $action) {
-
+        
         $url = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
         $url = DIRECTORY_SEPARATOR . $url[0];
+        
         $url .= DIRECTORY_SEPARATOR . $controller . DIRECTORY_SEPARATOR . $action;
-        var_dump($url . '\\' . page . '.php');
-        include '/views/' . $view . '.php';
+        //include '/views/' . $view . '.php';
+        header("Location: " . $url);
+        exit;
+    }
+    
+    public function redirectAdminControllers($controller, $action) {
+        
+        $url = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+        $url = DIRECTORY_SEPARATOR . $url[0] . DIRECTORY_SEPARATOR . $url[1];
+        
+        $url .= DIRECTORY_SEPARATOR . $controller . DIRECTORY_SEPARATOR . $action;
+        //include '/views/' . $view . '.php';
         header("Location: " . $url);
         exit;
     }

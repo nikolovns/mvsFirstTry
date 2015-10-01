@@ -7,12 +7,16 @@ class UserModels  {
     protected $id;
     protected $username;
     protected $password;
-    
-    
-    public function __construct($username, $password, $id = null) {
+    protected $admin;
+
+
+
+
+    public function __construct($username, $password, $admin, $id = null) {
         $this->setId($id);
         $this->setUsername($username);
         $this->setPasword($password);
+        $this->setAdmin($admin);
         
     }
             
@@ -27,6 +31,10 @@ class UserModels  {
     function setPasword($password) {
         $this->pasword = $password;
     }
+    
+    function setAdmin($admin) {
+        $this->admin = $admin;
+    }
 
     function getId() {
         return $this->id;
@@ -38,6 +46,10 @@ class UserModels  {
 
     function getPasword() {
         return $this->pasword;
+    }
+    
+    function getAdmin() {
+        return $this->admin;
     }
     
     public function save(){

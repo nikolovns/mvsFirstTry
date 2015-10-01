@@ -20,7 +20,7 @@ class App {
         
         $this->admin = $admin;
         if ($this->admin) {
-            $this->controller = 'page';
+            $this->controller = 'main';
         }
         
         $this->action = $action;
