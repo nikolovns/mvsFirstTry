@@ -7,6 +7,10 @@ class View {
 
     public function __construct($controller, $action) {
         $this->controller = $controller;
+        
+        if($this->controller == 'Admin\\') {
+            $this->controller = 'Admin\Home';
+        }
         $this->action = $action;
         if ($this->action == null) {
             $this->action = 'index';
@@ -22,6 +26,10 @@ class View {
         include 'Views/Default/templateHTML/' . $name . '.php';
     }
     
+    public function adminPart($name) {
+        include 'Views/Admin/Default/templateHTML/' . $name . '.php';
+    }
+    
     public function url(
             $controller = null,
             $action = null,
@@ -30,20 +38,22 @@ class View {
         $requstURI = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
         $root = array_shift($requstURI);
         $uri = '//' . $_SERVER['HTTP_HOST'] . '/' . $root;
-        $uri = "$uri";
-        //var_dump($uri); exit;
+        //$uri = "$uri";
+        
         if($controller) {
             $uri .= '/' .$controller;
         }
+        
         if($action) {
             $uri .= '/' . $action;
         }
+        
         if($params) {
             foreach ($params as $key => $value) {
                 $uri .= "/$value";
             }
         }
-        
+        //var_dump($uri);
         return $uri;
     }
     
@@ -56,12 +66,13 @@ class View {
         $root = array_shift($requstURI);
         $admin = array_shift($requstURI);
         $uri = '//' . $_SERVER['HTTP_HOST'] . '/' . $root . '/' . $admin;
-        $uri = "$uri";
+        //$uri = "$uri";
         
-        //var_dump($uri); exit;
+        
         if($controller) {
             $uri .= '/' .$controller;
         }
+        
         if($action) {
             $uri .= '/' . $action;
         }

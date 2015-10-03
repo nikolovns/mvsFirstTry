@@ -116,5 +116,10 @@ class MasterController {
         return htmlspecialchars($text, ENT_QUOTES, 'utf-8');
     }
     
+//    public function headerData() {
+//        $page = \Repository\Page::createInstance()
+//                ->selectAllPages();
+//        return $page;
+//    }
 
 }

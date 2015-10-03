@@ -1,11 +1,5 @@
 <?php
-
-define( 'DX_ROOT_DIR', dirname(__FILE__) . '/' );
-//get root name
-define( 'DX_ROOT_PATH', basename(dirname(__FILE__)) . '/' );
-
-
-
+error_reporting(E_ALL ^ E_NOTICE);
 require_once 'AutoLoad.php';
 new AutoLoad();
 
@@ -25,21 +19,19 @@ $uri = trim($uri, '/');
 $requestUri = explode('/', $uri);
 
 $controller = array_shift($requestUri);
-$admin = false;
-if($controller == 'admin') {
-    $controller = array_shift($requestUri);
-    $admin = true;
-}
-
-
 $controller = ucfirst(strtolower($controller));
+
+if($controller == 'Admin') {
+    $controller = array_shift($requestUri);
+    $controller = 'Admin' . DIRECTORY_SEPARATOR . ucfirst(strtolower($controller));
+
+}
 
 $action = array_shift($requestUri);
 
 $params = $requestUri;
-define('BASE_URL', $controller . DIRECTORY_SEPARATOR . $action . DIRECTORY_SEPARATOR);
 
-$app = new \App($controller, $action, $params, $admin);
+$app = new \App($controller, $action, $params);
 $app->run();
 
 

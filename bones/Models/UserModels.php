@@ -19,7 +19,9 @@ class UserModels  {
         $this->setAdmin($admin);
         
     }
-            
+  
+
+    
     function setId($id) {
         $this->id = $id;
     }
@@ -29,7 +31,7 @@ class UserModels  {
     }
 
     function setPasword($password) {
-        $this->pasword = $password;
+        $this->pasword = md5($password);
     }
     
     function setAdmin($admin) {

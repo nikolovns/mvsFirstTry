@@ -44,11 +44,15 @@ class User {
     }
 
     public function getOneByDetails($username, $password) {
-        $query = "SELECT username, password, admin, id FROM users WHERE username = ? AND password = ?";
-        $this->db->query($query, [$username, $password]);
+        $query = "SELECT username, password, id, admin FROM users WHERE username = ? AND password = ?";
+       
+        $this->db->query($query, [$username, md5($password)] );
+       
         $result = $this->db->row();
         return $this->getOneById($result['id']);
     }
+    
+    
 
     /**
      * 
@@ -56,13 +60,13 @@ class User {
      * @return \Repository\User
      */
     public function getOneById($id) {
-        $query = "SELECT username, password, id FROM users WHERE id = ?";
+        $query = "SELECT username, password, admin, id FROM users WHERE id = ?";
         $this->db->query($query, [$id]);
 
         $result = $this->db->row();
-
+        
         return new \Models\UserModels(
-            $result['username'], $result['password'], $result['id']
+            $result['username'], $result['password'], $result['admin'], $result['id']
         );
     }
 
@@ -92,6 +96,7 @@ class User {
             $user->getUsername(),
             $user->getPasword()
         ];
+        
 
         $this->db->query($query, $param);
         return $this->db->row();

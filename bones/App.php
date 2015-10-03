@@ -8,19 +8,18 @@ class App {
     private $params = [];
     
     private $classController;
-    private $admin;
+    private $admin = false;
     
-    function __construct($controller, $action, $params, $admin) {
+    function __construct($controller, $action, $params) {
         
         $this->controller = $controller;
-        
+
         if(empty($this->controller)){
             $this->controller = 'home';
         }
         
-        $this->admin = $admin;
-        if ($this->admin) {
-            $this->controller = 'main';
+        if($this->controller == 'Admin' . DIRECTORY_SEPARATOR) {
+            $this->admin = true;
         }
         
         $this->action = $action;
@@ -29,20 +28,16 @@ class App {
         }
         
         $this->params = $params;
-       
     }
      
     private function setController(){
         
         $view = new View($this->controller, $this->action);
-        $area = '';
-        
-        if ($this->admin) {
-            $area = 'Admin\\';
-            
+        $control = '';
+        if($this->admin) {
+            $control = 'Home';
         }
-        
-        $controller = '\Controllers\\' . $area . ucfirst(strtolower($this->controller)) . 'Controller';
+        $controller = '\Controllers'. DIRECTORY_SEPARATOR .ucfirst(strtolower($this->controller)) . $control . 'Controller';
         $this->classController = new $controller($view, $controller);
     }
     

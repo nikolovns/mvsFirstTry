@@ -1,6 +1,12 @@
 
-</div>
-<footer><h4>This is my footer for all pages</h4></footer>
-</body>
-</html>
+</main>
 
+            <footer class="panel">
+            <div class="panel-body">
+            </div>
+            <div class="panel-footer">&copy;Footer Copyright Information</div>
+        </footer>
+            
+        </div>
+    </body>
+</html>

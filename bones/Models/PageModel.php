@@ -56,5 +56,16 @@ class PageModel {
     function getSlug() {
         return $this->slug;
     }
-
+    
+    public function save(){
+        return \Repository\Page::createInstance()->save($this);
+    }
+    
+    public function update(){
+        return \Repository\Page::createInstance()->updatePage($this);
+    }
+    
+    public function delete($id) {
+        return \Repository\Page::createInstance()->delete($id);
+    }
 }

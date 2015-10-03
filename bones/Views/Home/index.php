@@ -1,16 +1,9 @@
-<ul>
 
-    <?php //foreach ($this->slug as $key => $value): ?>
-        <li> 
-            <a href="<?php //echo $this->url('home', 'page', [$value->getSlug()]); ?>">
-                <?php //echo $value->getSlug(); ?> 
-            </a>
-        </li>
-    <?php //endforeach; ?>
+<section class="col-md-11 jumbotron">
+    <article class="col-md-11 ">
+        <?php echo $this->escape($this->slug->getBody()); ?> 
+    </article>
+    
+</section>
 
-</ul>
 
-<?php
-//echo DIRECTORY_SEPARATOR . $value->getSlug();?>
-
-<?php echo $this->escape($this->slug->getBody()); ?> 

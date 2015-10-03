@@ -10,7 +10,21 @@ class UserController extends \Controllers\MasterController {
      * @var \Repository\User
      */
     
+    private function headerData() {
+        session_start();
+        $page = \Repository\Page::createInstance()
+                ->selectAllPages();
+
+        $this->view->page = $page;
+        $this->view->part('header');
+
+    }
+    
+    
     public function index() {
+        
+        $this->headerData();
+        $this->view->showView();
         session_start();
         //$this->view->part('header');
         if (isset($_POST['login'])) {
@@ -23,18 +37,18 @@ class UserController extends \Controllers\MasterController {
             $this->load($user);
         }
         
-        if(isset($_SESSION['user'])) {
-            $username = $_SESSION['user'];
-            
-            $user = \Repository\User::createInstance()
-                    ->getOneByName($username);
-            
-            $userId = $user->getId();
-            
-            $this->load($user);
-        }
+//        if(isset($_SESSION['user'])) {
+//            $username = $_SESSION['user'];
+//            
+//            $user = \Repository\User::createInstance()
+//                    ->getOneByName($username);
+//            
+//            $userId = $user->getId();
+//            
+//            $this->load($user);
+//        }
         
-        $this->view->showView(); 
+         
         $this->view->part('footer');
     }
     
@@ -56,12 +70,12 @@ class UserController extends \Controllers\MasterController {
             session_start();
             $username = $_POST['username'];
             $password = $_POST['password'];
-            //$email = $_POST['email'];
             
             $user = new \Models\UserModels($username, $password);
+
             $user->save();
-            
-            $_SESSION['userId'] = $username;
+            // change session name
+            $_SESSION['user'] = $username;
             $this->load($user);
         }
     }
