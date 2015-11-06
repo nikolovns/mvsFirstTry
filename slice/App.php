@@ -66,8 +66,6 @@ class App {
                 $this->params = [];
             }
 
-//            var_dump($this->action);
-
             call_user_func_array(array($this->classController, $this->action), $this->params);
 
         }

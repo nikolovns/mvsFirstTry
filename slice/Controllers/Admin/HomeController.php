@@ -122,6 +122,11 @@ class HomeController extends MasterController {
         $this->view->part('footer');
     }
 
+
+    /**
+     * @param Edit $page
+     * Edit page -> using Binding model
+     */
     public function edit(Edit $page) {
 
         $this->headerIndex();
@@ -131,10 +136,10 @@ class HomeController extends MasterController {
         $slug = explode('/', trim($slug, '/'));
         $slug = array_pop($slug);
 
-        $content = \Repository\Page::createInstance()
+        $content = Page::createInstance()
             ->selectOneContent($slug);
         $id = $content->getId();
-        $pages = \Repository\Page::createInstance()
+        $pages = Page::createInstance()
             ->selectById($id);
 
         $this->view->title = $pages->getTitle();
@@ -147,105 +152,26 @@ class HomeController extends MasterController {
         $title = $page->getTitle();
         $body = $page->getBody();
         $slug = $page->getSlug();
+        $id = $page->getId();
 
-        if($label && $title && $body && $slug) {
-//            var_dump(1111);
-            $updatePage = new \Models\PageModel($label, $title, $body, $slug);
-            var_dump($updatePage);
+        if($label && $title && $body && $slug && $id) {
+
+            $updatePage = new PageModel($label, $title, $body, $slug, $id);
+
             $updatePage->update();
-//            $this->redirectAdminControllers('home', 'log');
+            $this->redirectAdminControllers('home', 'log');
         }
-
-//        if(!isset($page)) {
-//var_dump(11111);
-////
-////
-//            $updatePage = new \Models\PageModel($label, $title, $body, $slug, $id);
-//            $updatePage->update();
-//        }
-
-//        if (isset($_POST['edit'])) {
-//            if (!empty(trim($_POST['title']))) {
-//                $title = $_POST['title'];
-//            }
-//            if (!empty(trim($_POST['label']))) {
-//                $label = $_POST['label'];
-//            }
-//            if (!empty(trim($_POST['slug']))) {
-//                $slug = $_POST['slug'];
-//            }
-//            if (!empty(trim($_POST['body']))) {
-//                $body = $_POST['body'];
-//            }
-//
-//            $id = $_POST['name'];
-//
-//            $updatePage = new \Models\PageModel($label, $title, $body, $slug, $id);
-//
-//            $updatePage->update();
-//
-//            $this->redirectAdminControllers('home', 'log');
-//        }
 
         $this->view->showView();
         $this->view->part('footer');
     }
-
-
-//    public function edit() {
-//
-//        $this->headerIndex();
-//        $this->headerData();
-//
-//        $slug = array_pop($_GET);
-//        $slug = explode('/', trim($slug, '/'));
-//        $slug = array_pop($slug);
-//
-//        $content = \Repository\Page::createInstance()
-//            ->selectOneContent($slug);
-//        $id = $content->getId();
-//        $pages = \Repository\Page::createInstance()
-//            ->selectById($id);
-//
-//        $this->view->title = $pages->getTitle();
-//        $this->view->label = $pages->getLabel();
-//        $this->view->slug = $pages->getSlug();
-//        $this->view->body = $pages->getBody();
-//        $this->view->id = $pages->getId();
-//
-//        if (isset($_POST['edit'])) {
-//            if (!empty(trim($_POST['title']))) {
-//                $title = $_POST['title'];
-//            }
-//            if (!empty(trim($_POST['label']))) {
-//                $label = $_POST['label'];
-//            }
-//            if (!empty(trim($_POST['slug']))) {
-//                $slug = $_POST['slug'];
-//            }
-//            if (!empty(trim($_POST['body']))) {
-//                $body = $_POST['body'];
-//            }
-//
-//            $id = $_POST['name'];
-//
-//            $updatePage = new \Models\PageModel($label, $title, $body, $slug, $id);
-//
-//            $updatePage->update();
-//
-//            $this->redirectAdminControllers('home', 'log');
-//        }
-//
-//        $this->view->showView();
-//        $this->view->part('footer');
-//    }
 
     public function delete() {
         $id = array_pop($_GET);
         $id = explode('/', trim($id, '/'));
         $id = array_pop($id);
 
-        $delete = \Repository\Page::createInstance()
+        $delete = Page::createInstance()
                 ->selectById($id);
         $id = $delete->getId();
         $delete->delete($id);
