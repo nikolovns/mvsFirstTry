@@ -4,11 +4,11 @@ namespace BindingModels;
 
 class Edit {
 
+    protected $id;
     protected $label;
     protected $title;
     protected $body;
     protected $slug;
-    protected $id;
 
     /**
      * @return mixed

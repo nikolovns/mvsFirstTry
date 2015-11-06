@@ -7,7 +7,6 @@ class Extract {
     private $view;
     private $controller;
     private $action;
-    private $params = [];
 
     private $model = true;
 
@@ -28,7 +27,6 @@ class Extract {
             if($controller == null) {
                 $controller = 'Home';
             }
-//            var_dump($controller);
             $controller = 'Admin\\' . ucfirst(strtolower($controller));
             $this->controller = $controller;
         }
@@ -40,24 +38,23 @@ class Extract {
         if($this->action == null) {
             $this->action = 'index';
         }
-//        var_dump($this->action);
-        //$params = $requestUri;
 
         $this->view = new \View($this->controller, $this->action);
-//        var_dump($this->view);
+
         $register = 'BindingModels\\' . ucfirst($this->action);
-//var_dump($register);
+
         if(!file_exists($register . '.php')){
-//            var_dump(1111111);
             $this->model = false;
             return $this->model;
         }
 
         $register = new $register();
         $obj = $this->extract($register);
+
         $className = 'Controllers\\' . $this->controller . 'Controller';
+
         $controller = new $className($this->view, $this->controller, $obj);
-//        var_dump($obj);
+
         $methods = get_class_methods($className);
 
         foreach ($methods as $method) {
@@ -68,8 +65,6 @@ class Extract {
         }
 
         return $this->model;
-
-//        $controller->register($obj);
     }
 
     /**
@@ -96,15 +91,16 @@ class Extract {
 
         if (isset($_POST[$submitButton])) {
             foreach ($methods as $method) {
+
                 if (strpos($method, 'set') === 0) {
+
                     $attribute = substr($method, 3);
                     $attribute = lcfirst($attribute);
+                    var_dump($_POST[$attribute]);
                     $objectInstance->$method($_POST[$attribute]);
-
                 }
             }
         }
-//        var_dump($objectInstance);
         return $objectInstance;
     }
 
