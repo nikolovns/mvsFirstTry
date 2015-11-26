@@ -2,25 +2,113 @@
 
 namespace Controllers;
 
-class MasterController extends \HTTP\HttpContext {
+use HTTP\HttpContext;
+
+class MasterController {
 
     /**
      *
      * @var \View
      */
     protected $view;
+
     protected $controller;
+
     protected $action;
+
     protected $params = array();
 
     protected $custom;
 
-    public function __construct(\View $view, $controller) {
+    protected $context;
+
+    protected $methods;
+
+
+    public function __construct(\View $view, $controller, HttpContext $context) {
         
         $this->view = $view;
         
         $this->controller = $controller;
+
+//        $this->context = $context;
+
+
+
+//        var_dump($this->params);
+//        $this->params = $params;
+
+//        $binding = new \BindingModels\Extract();
+//            $binding->regMethod();
+//
+//            if($binding->regMethod()) {
+//
+//                $con = 'BindingModels\\' . $this->action;
+//                $con = new $con();
+//                $this->params[] = $con;
+//            } else {
+//                $this->params = [];
+//            }
+//        var_dump($this->params);
+//        echo '<br />';
+
+//        $this->params = $params;
+//        var_dump($this->params);
+//
+//        $this->methods = $action;
+//
+        $args = func_get_args();
+        var_dump($args);
                
+    }
+
+
+
+//    function setParams($params) {
+//
+////        var_dump($reflect);
+//        $this->params = $params;
+//    }
+
+
+
+//    /**
+//     * @return mixed
+//     */
+//    public function getController()
+//    {
+//
+//        return $this->controller;
+//    }
+//
+//    /**
+//     * @param mixed $controller
+//     */
+//    public function setController($controller)
+//    {
+//        $binding = new \BindingModels\Extract();
+//            $binding->regMethod();
+//
+//            if($binding->regMethod()) {
+//
+//                $con = 'BindingModels\\' . $this->action;
+//                $con = new $con();
+//                $this->params[] = $con;
+//            } else {
+//                $this->params = [];
+//            }
+//        $this->controller = $controller;
+//    }
+
+
+
+    public function headerData() {
+        session_start();
+        $page = \Repository\Page::createInstance()
+            ->selectAllPages();
+
+        $this->view->page = $page;
+        $this->view->part('header');
     }
 
 
@@ -98,5 +186,7 @@ class MasterController extends \HTTP\HttpContext {
     public function escape($text) {
         return htmlspecialchars($text, ENT_QUOTES, 'utf-8');
     }
+
+
 
 }

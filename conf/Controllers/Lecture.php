@@ -3,27 +3,14 @@
 
 namespace Controllers;
 
-use Models\HallModel;
 use Models\LectureModel;
-use Repository\Hall;
 
 class LectureController extends MasterController {
 
-    private function headerData() {
-//        session_start();
-        $page = \Repository\Page::createInstance()
-            ->selectAllPages();
-
-        $this->view->page = $page;
-        $this->view->part('header');
-    }
-
     public function createLecture(\BindingModels\CreateLecture $lecture) {
-//        session_start();
         $this->headerData();
         $this->view->showView();
 
-//var_dump($lecture);
         /*
          * TODO
          * Conference ->
@@ -54,14 +41,15 @@ class LectureController extends MasterController {
 
     /**
      * @GET
-     * @ROUTE/conf/confer/$id=\d
+     * @ROUTE/conf/lecture/$id=\d
      */
     public function get($id) {
 
+        $this->headerData();
         $lecture = \Repository\Lecture::createInstance()
-            ->getLectureDetailsByConferenceId($id);
-
+            ->getLecturesById($id);
         var_dump($lecture);
+        $this->view->showView();
     }
 
 

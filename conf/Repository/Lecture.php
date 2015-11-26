@@ -74,6 +74,30 @@ class Lecture {
         return $this->db->row();
     }
 
+    public function getLecturesById($id) {
+        $query = 'SELECT name, startTime, endTime, break, hall_id, conference_Id, day, l.id
+                  FROM lectures as l
+                  WHERE c.id = ?';
+        $this->db->query($query, [$id]);
+        $result = $this->db->fetchAll();
+
+        $lecture = [];
+
+        foreach ($result as $key => $value) {
+            $lecture[] = new LectureModel(
+                $value['name'],
+                $value['startTime'],
+                $value['endTime'],
+                $value['break'],
+                $value['hall_id'],
+                $value['conference_Id'],
+                $value['day'],
+                $value['id']
+            );
+        }
+        return $lecture;
+    }
+
 
 
 }

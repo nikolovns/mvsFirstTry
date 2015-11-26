@@ -4,16 +4,6 @@ namespace Controllers;
 
 class HomeController extends MasterController {
 
-
-    private function headerData() {
-        session_start();
-        $page = \Repository\Page::createInstance()
-            ->selectAllPages();
-
-        $this->view->page = $page;
-        $this->view->part('header');
-    }
-
     public function index(){
 
         $slug = array_pop($_GET);

@@ -6,25 +6,13 @@ use Repository\UserInfo;
 
 class UserInfoController extends MasterController {
 
-    private function headerData() {
-        if(!isset($_SESSION)) {
-            session_start();
-        }
-        $page = \Repository\Page::createInstance()
-            ->selectAllPages();
-
-        $this->view->page = $page;
-        $this->view->part('header');
-    }
-
-
     public function profile() {
         $this->headerData();
 
-        $id = $this->getSession('id');
+        var_dump($this->getRequest()->getSession()->getSessionParams()->name);
 
         $user = UserInfo::createInstance()
-            ->selectAllById($id); // $_SESSION['id']
+            ->selectAllById(66); // $_SESSION['id']
 
         $this->view->content = $user;
 

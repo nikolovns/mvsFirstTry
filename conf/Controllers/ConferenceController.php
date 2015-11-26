@@ -1,0 +1,82 @@
+<?php
+
+namespace Controllers;
+
+use BindingModels\CreateConference;
+use HTTP\Request;
+use Models\ConferenceModel;
+use Models\VenueModel;
+use Repository\Conference;
+
+class ConferenceController extends MasterController {
+    /**
+     * @GET
+     * @ROUTE/conf/conferences/$showAll
+     */
+    public function all() {
+        $this->headerData();
+        $conf = Conference::createInstance()
+            ->selectAllConferencesDetails();
+
+        $this->view->conference = $conf;
+
+        $this->view->showView();
+
+        $this->view->part('footer');
+    }
+
+    public function createConference(CreateConference $conference) {
+        $this->headerData();
+        $this->view->showView();
+
+        if( $this->getSession('user') == null ) {
+            $this->redirectControllers('user', 'index');
+        }
+
+        /**
+         * get object property value
+         * $this->getRequest()->getPost()->getPostParams()->name;
+         */
+
+        $venueName = $conference->getName();
+        $venueAddress = $conference->getAddress();
+
+        $confName = $conference->getConfName();
+        $startDate = $conference->getStartDate();
+        $endDate = $conference->getEndDate();
+        $userId = $this->getSession('id');
+
+
+        /**
+         * this part added venue's data
+         */
+        $venue = new VenueModel($venueName, $venueAddress);
+        $venue->save();
+
+        $venueId = \Repository\Venue::createInstance()
+            ->selectId();
+        $conference = new ConferenceModel($confName, $startDate, $endDate, $venueId, $userId);
+
+        $conference->save();
+
+        $conf = Conference::createInstance()
+            ->selectAllConferencesDetails();
+
+        $confId = array_pop($conf);
+        $confId = $confId->getId();
+
+        if($conference->getConfName() != null) {
+            $this->setSession(['venue_id'=>$venueId, 'conferenceId'=>$confId]);
+
+            $user = \Repository\User::createInstance()
+                ->editUserId($userId);
+
+//            $this->redirectControllers('hall', 'createHall');
+        }
+
+        $this->view->part('footer');
+        exit;
+    }
+
+
+}

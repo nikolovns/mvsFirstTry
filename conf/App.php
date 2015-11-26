@@ -12,6 +12,10 @@ class App {
     private $admin = false;
 
     private $view;
+
+    private $context;
+    private $request;
+    private $post;
     
     function __construct($controller, $action, $params = []) {
         
@@ -28,15 +32,43 @@ class App {
         }
         
         $this->params = $params;
+
+//        $binding = new Extract();
+//        $binding->regMethod();
+//
+//            if($binding->regMethod()) {
+//
+//                $con = 'BindingModels\\' . $this->action;
+//                $con = new $con();
+//                $this->params[] = $con;
+//            } else {
+//                $this->params = [];
+//            }
+
     }
 
     public function getView() {
         return $this->view = new View($this->controller, $this->action);
     }
+
+    public function getForm() {
+        return $this->post = new \HTTP\Form($_POST);
+    }
+
+    public function getRequest() {
+        return $this->request = new \HTTP\HttpRequest($this->getForm());
+    }
+
+    public function getContext() {
+
+        return $this->context = new \HTTP\HttpContext($this->getRequest());
+    }
      
     private function setController(){
 
         $view = $this->getView();
+        $context = $this->getContext();
+        $params = $this->params;
         $admin = '';
         if($this->admin === true) {
             if($this->controller == 'Admin\\') {
@@ -45,28 +77,38 @@ class App {
         }
         // no directory_separator
         $controller = 'Controllers\\' . ucfirst($this->controller) . 'Controller';
-        $this->classController = new $controller($view, $controller);
+        $this->classController = new $controller($view, $controller, $context);
+//        var_dump($view);
     }
 
     public function run() {
+
+        $this->setController();
+
+
+
         $config = new \Config\Route();
         $config->runs();
 
+
         if(!$config->getCustomRoute()) {
-            $this->setController();
-
-            $binding = new Extract();
-            $binding->regMethod();
-
-            if($binding->regMethod()) {
-                $con = 'BindingModels\\' . $this->action;
-                $con = new $con();
-                $this->params[] = $con;
-            } else {
-                $this->params = [];
-            }
+//            var_dump($this->classController);
 
             call_user_func_array(array($this->classController, $this->action), $this->params);
+//            $binding = new Extract();
+//            $binding->regMethod();
+//
+//            if($binding->regMethod()) {
+//
+//                $con = 'BindingModels\\' . $this->action;
+//                $con = new $con();
+//                $this->params[] = $con;
+//            } else {
+//                $this->params = [];
+//            }
+//            var_dump($this->params);
+//            var_dump($this->classController);
+
 
         }
     }

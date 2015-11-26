@@ -23,6 +23,7 @@ class View {
         }
 
         $this->params = $params;
+
     }
 
     /**
