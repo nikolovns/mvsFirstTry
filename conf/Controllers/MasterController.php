@@ -88,7 +88,7 @@ class MasterController extends AbstractActionController {
 //
 //        $this->methods = $action;
 //
-        $args = func_get_args();
+//        $args = func_get_args();
 //        var_dump($args);
                
     }

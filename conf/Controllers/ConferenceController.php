@@ -8,21 +8,21 @@ use Models\VenueModel;
 use Repository\Conference;
 
 class ConferenceController extends MasterController {
-    /**
-     * @GET
-     * @ROUTE/conf/conferences/$showAll
-     */
-    public function all() {
-        $this->headerData();
-        $conf = Conference::createInstance()
-            ->selectAllConferencesDetails();
-
-        $this->view->conference = $conf;
-
-        $this->view->showView();
-
-        $this->view->part('footer');
-    }
+//    /**
+//     * @GET
+//     * @ROUTE/conf/conferences/$showAll
+//     */
+//    public function all() {
+//        $this->headerData();
+//        $conf = Conference::createInstance()
+//            ->selectAllConferencesDetails();
+//
+//        $this->view->conference = $conf;
+//
+//        $this->view->showView();
+//
+//        $this->view->part('footer');
+//    }
 
     public function createConference(CreateConference $conference) {
         $this->headerData();
@@ -77,10 +77,22 @@ class ConferenceController extends MasterController {
         exit;
     }
 
-    public function Test() {
+    /**
+     * @GET
+     * @ROUTE/conf/conference/$id=\d
+     * @param $id
+     */
+    public function Test($id) {
         $this->headerData();
 
+        $conference = Conference::createInstance()
+            ->selectConferenceById($id);
+        
+        $this->view->conference = $conference;
+
         $this->view->showCustomView('Test');
+        $this->view->part('footer');
+
     }
 
 

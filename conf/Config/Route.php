@@ -32,11 +32,13 @@ class Route {
 
         foreach ($classAttributes as $attribute) {
             $params = explode('/', trim($attribute['route'], '/') );
+
             $route = array_shift($params);
 
             if($route == 'ROUTE') {
+                $matches = true;
 
-
+//var_dump($params);
                 for ($i = 0; $i<count($params); $i++) {
                     $type = '';
 
@@ -57,7 +59,7 @@ class Route {
 
                         if ($type == '\d') {
                             if (is_numeric($requestUri[$i])) {
-
+//var_dump($params[$i]);
                                 $params[$i] = $requestUri[$i];
                                 $param = $params[$i];
                             } else {
@@ -74,7 +76,7 @@ class Route {
 
                     if($matches) {
                         $this->view = new \View($controller, $method);
-
+//var_dump($this->view);
                         $class = new $controller($this->view, '');
 
                         $class->$method($param);

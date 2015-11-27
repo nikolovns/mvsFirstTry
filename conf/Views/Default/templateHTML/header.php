@@ -28,6 +28,11 @@ main {min-height: 500px;}
                             </li>
                         <?php endforeach; ?>
 
+                        <?php  ;?>
+                        <li>
+                            <a class="btn" href="<?php echo $this->url('home', 'index');?>">Conferences</a>
+                        </li>
+
                         <?php if(isset($_SESSION['user'])): ; ?>
                             <li>
                                 <a class="btn" href="<?php echo $this->url('user', 'logout'); ?>">Logout</a>

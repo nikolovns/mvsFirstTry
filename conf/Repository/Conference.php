@@ -73,6 +73,7 @@ class Conference {
         ];
 
         $this->db->query($query, $param);
+
         return $this->db->row();
     }
 
