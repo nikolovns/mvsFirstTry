@@ -42,12 +42,15 @@ class Extract {
         $this->view = new \View($this->controller, $this->action);
 
         $register = 'BindingModels\\' . ucfirst($this->action);
-
+//        return $register;
 
         if(!file_exists($register . '.php')){
             $this->model = false;
             return $this->model;
         }
+
+//        $args = func_get_args();
+//        var_dump($args);
 
         $register = new $register();
         $obj = $this->extract($register);

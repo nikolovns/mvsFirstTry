@@ -8,10 +8,12 @@ class HttpContext
 {
 
     private $request;
+    private $session;
 
-    public function __construct(\HTTP\HttpRequest $request = null)
+    public function __construct(\HTTP\HttpRequest $request, \HTTP\Session $session)
     {
         $this->request = $request;
+        $this->session = $session;
     }
 
     public function getRequest()

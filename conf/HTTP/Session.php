@@ -11,20 +11,24 @@ class Session {
         $this->sessionParams = $sessionParams;
     }
 
+    /**
+     * @return array
+     */
+    public function getSessionParams($key)
+    {
+        return $this->sessionParams[$key];
+    }
 
+    /**
+     * @param array $sessionParams
+     */
     public function setSessionParams($sessionParams)
     {
         foreach ($sessionParams as $key => $value) {
-            $this->sessionParams[$key] = $value;
-        }
-    }
 
-    public function getSessionParams() {
-//        foreach ($this as $key => $value) {
-//            $this->sessionParams[$key] = $value;
-//        }
-//var_dump($this->sessionParams);
-        return (object)$this->sessionParams;
+            $_SESSION[$key] = $value;
+            $this->sessionParams = $_SESSION;
+        }
     }
 
     public function deleteSession($key)

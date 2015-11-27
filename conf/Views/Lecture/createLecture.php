@@ -21,7 +21,7 @@
     <label class="label label-info" for="day">Date</label>
     <input type="date" class="form-control" name="day" id="day">
 
-    <input type="text" name="idConference" value="<?php session_start(); echo $_SESSION['conferenceId'] ;?>">
+    <input type="hidden" name="idConference" value="<?php echo $_SESSION['conferenceId'] ;?>">
 
     <input type="submit" name="createlecture" value="Create" class="btn-info">
 

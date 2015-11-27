@@ -32,7 +32,6 @@ class UserController extends MasterController {
         $this->headerData();
 
         $this->view->showView();
-        var_dump($this->context->getRequest()->getPost()->getPostParam('name', 'default'));
         $username = $user->getUsername();
         $password = $user->getPassword();
 
@@ -59,9 +58,12 @@ class UserController extends MasterController {
 //
 //                var_dump($a);
 //                var_dump($b);
-var_dump($this->context->getRequest()->getPost()->getPostParam('name', 'some'));
-                $this->view->user = $user->getUsername();
-//                $this->redirectControllers('userInfo', 'profile');
+
+                $this->getSession()->setSessionParams(['user'=>$user->getUsername(), 'id'=>$id]);
+
+                var_dump($this->getSession()->getSessionParams('user'));
+//                $this->view->user = $user->getUsername();
+                $this->redirectControllers('userInfo', 'profile');
                 exit;
             }
         }
@@ -115,7 +117,7 @@ var_dump($this->context->getRequest()->getPost()->getPostParam('name', 'some'));
     public function logout() {
         session_start();
 
-        $this->deleteSession('user');
+        $this->getSession()->deleteSession('user');
 
         $this->redirectControllers('user', 'index');
         exit;

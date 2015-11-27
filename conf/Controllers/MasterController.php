@@ -4,7 +4,7 @@ namespace Controllers;
 
 use HTTP\HttpContext;
 
-class MasterController {
+class MasterController extends AbstractActionController {
 
     /**
      *
@@ -25,19 +25,50 @@ class MasterController {
     protected $methods;
 
 
-    public function __construct(\View $view, $controller, HttpContext $context) {
+    public function __construct(\View $view, $controller) {
         
         $this->view = $view;
         
         $this->controller = $controller;
 
+        $this->context = $this->getContext();
+
+        $this->params = 'BindingModels\\' . $controller;
+
+//        var_dump($this->getRequest());
+
+//        var_dump($this->regMethod());
+
+
+//        $reflector = new \ReflectionClass($controller);
+//        $a = $reflector->getMethod($action)->getParameters();
+////$this->action = $action;
+//        if(isset($a)) {
+//            var_dump($a[0]->name);
+//
+//            $binding = new \BindingModels\Extract();
+//            $binding->regMethod();
+//            $con = $binding->regMethod();
+//            $con = new $con($this->params);
+//            $this->params = $con;
+//            $this->action = $action;
+//
+//
+////
+//        }
 //        $this->context = $context;
+
+//        $this->params = $params;
+
+//var_dump($this->onDispatch("$params"));
+
+//        $this->params = $params("$this->testAction()");
 
 
 
 //        var_dump($this->params);
 //        $this->params = $params;
-
+//
 //        $binding = new \BindingModels\Extract();
 //            $binding->regMethod();
 //
@@ -58,9 +89,10 @@ class MasterController {
 //        $this->methods = $action;
 //
         $args = func_get_args();
-        var_dump($args);
+//        var_dump($args);
                
     }
+
 
 
 
@@ -103,7 +135,7 @@ class MasterController {
 
 
     public function headerData() {
-        session_start();
+//        session_start();
         $page = \Repository\Page::createInstance()
             ->selectAllPages();
 

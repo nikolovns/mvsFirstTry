@@ -6,6 +6,8 @@ class View {
     protected $action;
     protected $params = [];
 
+    protected $context;
+
     public function __construct($controller, $action, $params = []) {
         $this->controller = $controller;
         if($this->controller == null) {
@@ -24,7 +26,10 @@ class View {
 
         $this->params = $params;
 
+
+
     }
+
 
     /**
      * Require default view
@@ -53,6 +58,7 @@ class View {
         fclose($file);
 
         preg_match_all('/([A-Z])\w+/', $content, $matches);
+
         $view = $matches[0][0];
         if($view == $custom) {
             require_once $path . $custom . '.php';

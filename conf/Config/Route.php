@@ -22,9 +22,8 @@ class Route {
 
 
         $requestUri = explode('/' , trim($_SERVER["REQUEST_URI"], '/') );
-//var_dump($requestUri);
         echo '<br />';
-//var_dump($classAttributes);
+
         $controller = '';
         $method = '';
         $param = '';

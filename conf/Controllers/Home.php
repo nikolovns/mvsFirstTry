@@ -27,12 +27,7 @@ class HomeController extends MasterController {
         $this->view->part('footer');
     }
 
-    /**
-     * @GET
-     * @/conf/home/$slug=\w
-     * @AUTHORIZE
-     * @param $slug
-     */
+
     public function page($slug) {
 
         $this->headerData();
@@ -45,7 +40,6 @@ class HomeController extends MasterController {
         $this->view->showCustomView('Page');
 
         $this->view->part('footer');
-
 
     }
 

@@ -3,7 +3,6 @@
 namespace Controllers;
 
 use BindingModels\CreateConference;
-use HTTP\Request;
 use Models\ConferenceModel;
 use Models\VenueModel;
 use Repository\Conference;
@@ -29,7 +28,7 @@ class ConferenceController extends MasterController {
         $this->headerData();
         $this->view->showView();
 
-        if( $this->getSession('user') == null ) {
+        if( $this->getSession()->getSessionParams('user') == null ) {
             $this->redirectControllers('user', 'index');
         }
 
@@ -44,7 +43,7 @@ class ConferenceController extends MasterController {
         $confName = $conference->getConfName();
         $startDate = $conference->getStartDate();
         $endDate = $conference->getEndDate();
-        $userId = $this->getSession('id');
+        $userId = $this->getSession()->getSessionParams('id');
 
 
         /**
@@ -66,16 +65,22 @@ class ConferenceController extends MasterController {
         $confId = $confId->getId();
 
         if($conference->getConfName() != null) {
-            $this->setSession(['venue_id'=>$venueId, 'conferenceId'=>$confId]);
+            $this->getSession()->setSessionParams(['venue_id'=>$venueId, 'conferenceId'=>$confId]);
 
-            $user = \Repository\User::createInstance()
-                ->editUserId($userId);
+//            $user = \Repository\User::createInstance()
+//                ->editUserId($userId);
 
-//            $this->redirectControllers('hall', 'createHall');
+            $this->redirectControllers('hall', 'createHall');
         }
 
         $this->view->part('footer');
         exit;
+    }
+
+    public function Test() {
+        $this->headerData();
+
+        $this->view->showCustomView('Test');
     }
 
 
