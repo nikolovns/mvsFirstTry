@@ -6,6 +6,7 @@ use BindingModels\CreateConference;
 use Models\ConferenceModel;
 use Models\VenueModel;
 use Repository\Conference;
+use Repository\Venue;
 
 class ConferenceController extends MasterController {
 //    /**
@@ -36,7 +37,6 @@ class ConferenceController extends MasterController {
          * get object property value
          * $this->getRequest()->getPost()->getPostParams()->name;
          */
-
         $venueName = $conference->getName();
         $venueAddress = $conference->getAddress();
 
@@ -44,7 +44,6 @@ class ConferenceController extends MasterController {
         $startDate = $conference->getStartDate();
         $endDate = $conference->getEndDate();
         $userId = $this->getSession()->getSessionParams('id');
-
 
         /**
          * this part added venue's data
@@ -82,15 +81,20 @@ class ConferenceController extends MasterController {
      * @ROUTE/conf/conference/$id=\d
      * @param $id
      */
-    public function Test($id) {
+    public function conf($id) {
         $this->headerData();
 
         $conference = Conference::createInstance()
             ->selectConferenceById($id);
-        
+
         $this->view->conference = $conference;
 
-        $this->view->showCustomView('Test');
+        $venue = Venue::createInstance()
+            ->selectByConferenceId($id);
+
+        $this->view->venue = $venue;
+
+        $this->view->showCustomView('Conf');
         $this->view->part('footer');
 
     }

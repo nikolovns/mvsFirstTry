@@ -9,6 +9,7 @@
                 <p>Conference End: <?php echo $this->escape($value->getEndDate()); ?></p>
                 <p>Conference Venue: <?php echo $this->escape($value->getName()); ?></p>
                 <p>Conference Address: <?php echo $this->escape($value->getAddress()); ?></p>
+                <a href="<?php echo $this->url('conference', $value->getId()); ?>">View Conference Program</a>
             </article>
             <hr/>
 

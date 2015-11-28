@@ -2,7 +2,7 @@
 
 namespace Repository;
 
-use Models\UserInfoModel;
+use Models\User_infoModel;
 
 class UserInfo {
 
@@ -41,7 +41,7 @@ class UserInfo {
 
         $result = $this->db->row();
 
-        return new \Models\UserInfoModel(
+        return new \Models\User_infoModel(
             $result['gender'],
             $result['first_name'],
             $result['last_name'],
@@ -77,7 +77,7 @@ class UserInfo {
         return $allConferences;
     }
 
-    public function save(UserInfoModel $user) {
+    public function save(User_infoModel $user) {
 
         $query ='INSERT INTO user_info(user_id, gender, first_name, last_name, email)
                 VALUE (?, ?, ?, ?, ?)';

@@ -55,7 +55,9 @@ class Conference {
 
     public function selectConferenceById($id) {
 
-        $query = 'SELECT confName, startDate, endDate, id FROM conferences where id = ?';
+        $query = 'SELECT c.confName, c.startDate, c.endDate, c.id
+                  FROM conferences c
+                  WHERE id = ?';
 
         $this->db->query($query, [$id]);
         return $this->db->row();

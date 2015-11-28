@@ -4,25 +4,6 @@ namespace Controllers;
 
 class AbstractActionController
 {
-    public function onDispatch($params)
-    {
-        $method = $this->getMethodFromParams($params);
-        return $this->$method($params);
-    }
-    public function testAction()
-    {
-        return new \View('user', '', '');
-    }
-//    public function createAction()
-//    {
-//        return new View;
-//    }
-    public function getMethodFromParams($params)
-    {
-        var_dump($params);
-    }
-//
-
 
     public function getSession() {
         session_start();

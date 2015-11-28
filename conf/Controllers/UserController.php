@@ -7,8 +7,8 @@ use BindingModels\Register;
 use HTTP\Form;
 use HTTP\HttpContext;
 use HTTP\HttpRequest;
-use Models\UserInfoModel;
-use Models\UserModels;
+use Models\User_infoModel;
+use Models\UsersModel;
 use Repository\User;
 
 class UserController extends MasterController {
@@ -17,18 +17,12 @@ class UserController extends MasterController {
 
     private $model;
 
-//    public function __construct(\View $view, $controller, HttpContext $context, $params, $action) {
-//        parent::__construct($view, $controller, $context, $params, $action);
-//    }
-
     /**
      * @param Index $user
      * login user
      */
 
-
     public function index(Index $user) {
-//var_dump($user);
         $this->headerData();
 
         $this->view->showView();
@@ -43,26 +37,8 @@ class UserController extends MasterController {
 
             if ( $username == $user->getUsername() && $id != null ) {
 
-//                $this->getRequest()->getSession()->getSessionParams()->id = $id;
-
-//                $args = array('user'=>$user->getUsername(), 'id'=>$id);
-//                $httpObj = new HttpContext();
-//                $httpObj->setSession($args);
-//                $form = new Form($_POST);
-//                $request = new HttpRequest($form);
-//                $context = new HttpContext($request);
-//
-//                $a = $context->getRequest()->getPost()->getPostParam('name', 'insert');
-//
-//                $b = $context->getRequest()->getPost()->getPostParam('', 'insert');
-//
-//                var_dump($a);
-//                var_dump($b);
-
                 $this->getSession()->setSessionParams(['user'=>$user->getUsername(), 'id'=>$id]);
 
-                var_dump($this->getSession()->getSessionParams('user'));
-//                $this->view->user = $user->getUsername();
                 $this->redirectControllers('userInfo', 'profile');
                 exit;
             }
@@ -87,7 +63,7 @@ class UserController extends MasterController {
             $email = $user->getEmail();
             $gender = $user->getGender();
 
-            $user = new UserModels($username, $password);
+            $user = new UsersModel($username, $password);
 
             /**
              * Save only username and password in table users
@@ -99,7 +75,7 @@ class UserController extends MasterController {
 
             $id = $userData->getId();
 
-            $userInfo = new UserInfoModel($gender, $firstName, $lastName, $email, $id);
+            $userInfo = new User_infoModel($gender, $firstName, $lastName, $email, $id);
 
             /**
              * save UserInfoController in table user_info

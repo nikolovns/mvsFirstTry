@@ -47,18 +47,8 @@ class Venue {
         $this->db->query($query);
 
         $result = $this->db->fetchAll();
-//var_dump($result);
 
         $allVenues = [];
-
-//        foreach ($result as $key => $value) {
-//            $allVenues[] = new \Models\VenueModel(
-//                $value['name']
-//            );
-//        }
-
-//        var_dump($allVenues);
-
 
         $allConferences = [];
 
@@ -70,16 +60,14 @@ class Venue {
                 $value['venue_id'],
                 $value['id'],
                 $allVenues[] = new \Models\VenueModel(
-                    $value['name']
+                    $value['name'],
+                    $value['address']
                 )
             );
         }
-        var_dump($allVenues);
+
         return $allConferences;
     }
-
-
-
 
     public function save(\Models\VenueModel $venue) {
         $query = 'INSERT INTO venues (name, address) VALUES (?, ?)';
@@ -126,6 +114,21 @@ class Venue {
         $this->db->query($query, [$id]);
 
         $result = $this->db->row();
+        return new \Models\VenueModel(
+            $result['name'], $result['address'], $result['id']
+        );
+    }
+
+    public function selectByConferenceId($id){
+        $query = "SELECT v.name, v.address, v.id
+                  FROM venues v
+                  JOIN conferences c ON c.venue_id = v.id
+                  WHERE c.id = ?";
+
+        $this->db->query($query, [$id]);
+
+        $result = $this->db->row();
+
         return new \Models\VenueModel(
             $result['name'], $result['address'], $result['id']
         );

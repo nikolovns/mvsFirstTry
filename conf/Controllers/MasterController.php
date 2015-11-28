@@ -35,105 +35,14 @@ class MasterController extends AbstractActionController {
 
         $this->params = 'BindingModels\\' . $controller;
 
-//        var_dump($this->getRequest());
-
-//        var_dump($this->regMethod());
-
-
-//        $reflector = new \ReflectionClass($controller);
-//        $a = $reflector->getMethod($action)->getParameters();
-////$this->action = $action;
-//        if(isset($a)) {
-//            var_dump($a[0]->name);
-//
-//            $binding = new \BindingModels\Extract();
-//            $binding->regMethod();
-//            $con = $binding->regMethod();
-//            $con = new $con($this->params);
-//            $this->params = $con;
-//            $this->action = $action;
-//
-//
-////
-//        }
-//        $this->context = $context;
-
-//        $this->params = $params;
-
-//var_dump($this->onDispatch("$params"));
-
-//        $this->params = $params("$this->testAction()");
-
-
-
-//        var_dump($this->params);
-//        $this->params = $params;
-//
-//        $binding = new \BindingModels\Extract();
-//            $binding->regMethod();
-//
-//            if($binding->regMethod()) {
-//
-//                $con = 'BindingModels\\' . $this->action;
-//                $con = new $con();
-//                $this->params[] = $con;
-//            } else {
-//                $this->params = [];
-//            }
-//        var_dump($this->params);
-//        echo '<br />';
-
-//        $this->params = $params;
-//        var_dump($this->params);
-//
-//        $this->methods = $action;
-//
-//        $args = func_get_args();
-//        var_dump($args);
-               
     }
 
-
-
-
-//    function setParams($params) {
-//
-////        var_dump($reflect);
-//        $this->params = $params;
-//    }
-
-
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getController()
-//    {
-//
-//        return $this->controller;
-//    }
-//
-//    /**
-//     * @param mixed $controller
-//     */
-//    public function setController($controller)
-//    {
-//        $binding = new \BindingModels\Extract();
-//            $binding->regMethod();
-//
-//            if($binding->regMethod()) {
-//
-//                $con = 'BindingModels\\' . $this->action;
-//                $con = new $con();
-//                $this->params[] = $con;
-//            } else {
-//                $this->params = [];
-//            }
-//        $this->controller = $controller;
-//    }
-
-
-
+    /**
+     * This method add all created page in navigation bar
+     * add header for page
+     * TODO
+     * the admin can add pages (for everything???)
+     */
     public function headerData() {
 //        session_start();
         $page = \Repository\Page::createInstance()
@@ -141,6 +50,15 @@ class MasterController extends AbstractActionController {
 
         $this->view->page = $page;
         $this->view->part('header');
+    }
+
+    /**
+     * @param $name
+     * This method include header or footer
+     */
+
+    public function part($name) {
+        include 'Views/Master/' . $name . '.php';
     }
 
 
@@ -157,7 +75,6 @@ class MasterController extends AbstractActionController {
         }
         $url = DIRECTORY_SEPARATOR . $url[0];
         $url .= '/' . $controller . '/' . $action;
-        //var_dump($url);
 
         $view = 'Views/' . $controller . '/' . $action . '.php';
         require_once $view;
@@ -205,15 +122,7 @@ class MasterController extends AbstractActionController {
         exit;
     }
 
-    /**
-     * @param $name
-     * This method include header or footer
-     */
-    
-    public function part($name) {
-        include 'Views/Master/' . $name . '.php';
-    }
-    
+
     
     public function escape($text) {
         return htmlspecialchars($text, ENT_QUOTES, 'utf-8');
